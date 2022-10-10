@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:aalo/views/home.dart';
+import 'package:aalo/views/liked.dart';
+import 'package:aalo/views/more.dart';
+import 'package:aalo/views/search.dart';
 import 'package:aalo/widgets/bottom_action_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,26 +45,29 @@ class _DashboardState extends State<Dashboard> {
   }
 
   int currentPage = 0;
+  final List<Map<String, dynamic>> pages = const [
+    {'screen': Home(), 'name': "Home"},
+    {'screen': Search(), 'name': "Search"},
+    {'screen': Liked(), 'name': "Favorite"},
+    {'screen': AdditionalResource(), 'name': "Additional Resource"}
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: currentPage == 0 ? true : false,
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text("aalo"),
+        title: Text(pages[currentPage]['name']),
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.black.withOpacity(0.05)),
       ),
       body: Stack(children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-        ),
+        pages[currentPage]['screen'],
         Positioned(
           bottom: 0,
           left: 0,
@@ -73,23 +80,23 @@ class _DashboardState extends State<Dashboard> {
               bottomActionBarItem(
                   'assets/svg/home.svg',
                   currentPage == 0
-                      ? Colors.white.withOpacity(0.8)
-                      : const Color(0xff333333)),
+                      ? Colors.white.withOpacity(0.7)
+                      : const Color(0xff333333).withOpacity(0.6)),
               bottomActionBarItem(
                   'assets/svg/search.svg',
                   currentPage == 1
-                      ? Colors.white.withOpacity(0.8)
-                      : const Color(0xff333333)),
+                      ? Colors.white.withOpacity(0.7)
+                      : const Color(0xff333333).withOpacity(0.6)),
               bottomActionBarItem(
                   'assets/svg/heart.svg',
                   currentPage == 2
-                      ? Colors.white.withOpacity(0.8)
-                      : const Color(0xff333333)),
+                      ? Colors.white.withOpacity(0.7)
+                      : const Color(0xff333333).withOpacity(0.6)),
               bottomActionBarItem(
                   'assets/svg/list.svg',
                   currentPage == 3
-                      ? Colors.white.withOpacity(0.8)
-                      : const Color(0xff333333)),
+                      ? Colors.white.withOpacity(0.7)
+                      : const Color(0xff333333).withOpacity(0.6)),
             ],
           ),
         )

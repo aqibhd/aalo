@@ -11,17 +11,17 @@ class BottomActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: (MediaQuery.of(context).size.width * 0.15), vertical: 10),
+          horizontal: (MediaQuery.of(context).size.width * 0.1), vertical: 20),
       child: Container(
         height: 60.0,
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.1),
             borderRadius: const BorderRadius.all(Radius.circular(50))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             for (int i = 0; i < bottomActionBarItems.length; i++)
               InkWell(
+                enableFeedback: false,
                 splashColor: Colors.white.withOpacity(0.05),
                 borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                 onTap: () => onTap(i),
