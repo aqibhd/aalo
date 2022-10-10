@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:aalo/views/home.dart';
 import 'package:aalo/views/liked.dart';
-import 'package:aalo/views/more.dart';
 import 'package:aalo/views/search.dart';
 import 'package:aalo/widgets/bottom_action_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const Aalo());
 }
@@ -48,20 +49,26 @@ class _DashboardState extends State<Dashboard> {
   final List<Map<String, dynamic>> pages = const [
     {'screen': Home(), 'name': "Home"},
     {'screen': Search(), 'name': "Search"},
-    {'screen': Liked(), 'name': "Favorite"},
-    {'screen': AdditionalResource(), 'name': "Additional Resource"}
+    {'screen': Liked(), 'name': "Collection"},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      extendBodyBehindAppBar: currentPage == 0 ? true : false,
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(pages[currentPage]['name']),
+        backgroundColor: Colors.black.withOpacity(0.1),
+        title: currentPage != 1
+            ? Text(pages[currentPage]['name'])
+            : Container(
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    color: Colors.white),
+              ),
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.black.withOpacity(0.05)),
@@ -80,23 +87,18 @@ class _DashboardState extends State<Dashboard> {
               bottomActionBarItem(
                   'assets/svg/home.svg',
                   currentPage == 0
-                      ? Colors.white.withOpacity(0.7)
-                      : const Color(0xff333333).withOpacity(0.6)),
+                      ? Colors.white.withOpacity(0.9)
+                      : Color.fromARGB(255, 100, 100, 100).withOpacity(0.85)),
               bottomActionBarItem(
                   'assets/svg/search.svg',
                   currentPage == 1
-                      ? Colors.white.withOpacity(0.7)
-                      : const Color(0xff333333).withOpacity(0.6)),
+                      ? Colors.white.withOpacity(0.9)
+                      : Color.fromARGB(255, 100, 100, 100).withOpacity(0.85)),
               bottomActionBarItem(
-                  'assets/svg/heart.svg',
+                  'assets/svg/collection.svg',
                   currentPage == 2
-                      ? Colors.white.withOpacity(0.7)
-                      : const Color(0xff333333).withOpacity(0.6)),
-              bottomActionBarItem(
-                  'assets/svg/list.svg',
-                  currentPage == 3
-                      ? Colors.white.withOpacity(0.7)
-                      : const Color(0xff333333).withOpacity(0.6)),
+                      ? Colors.white.withOpacity(0.9)
+                      : Color.fromARGB(255, 100, 100, 100).withOpacity(0.85)),
             ],
           ),
         )
