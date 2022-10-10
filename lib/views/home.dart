@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
@@ -46,8 +47,8 @@ class Home extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) => Container(
                   color: Color(int.parse(
                       '0xff${(snapshot.data![index].avgColor).substring(1)}')),
-                  child: Image.network(
-                    (snapshot.data![index]).src.tiny,
+                  child: CachedNetworkImage(
+                    imageUrl: (snapshot.data![index]).src.tiny,
                     fit: BoxFit.cover,
                   ),
                 ),
