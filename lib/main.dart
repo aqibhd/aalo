@@ -1,13 +1,16 @@
 import 'dart:async';
-
+import 'dart:ui';
 import 'package:aalo/views/home.dart';
 import 'package:aalo/views/liked.dart';
+import 'package:aalo/views/more.dart';
 import 'package:aalo/views/search.dart';
 import 'package:aalo/widgets/bottom_action_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -59,6 +62,14 @@ class _DashboardState extends State<Dashboard> {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
+        actions: currentPage == 0
+            ? [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: AdditionalResourceButton(),
+                )
+              ]
+            : null,
         elevation: 0,
         backgroundColor: Colors.black.withOpacity(0.1),
         title: currentPage != 1
@@ -103,6 +114,44 @@ class _DashboardState extends State<Dashboard> {
           ),
         )
       ]),
+    );
+  }
+}
+
+class AdditionalResourceButton extends StatelessWidget {
+  const AdditionalResourceButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(100)),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+        child: InkWell(
+          onTap: () => Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => const AdditionalResource())),
+          child: Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white
+                  .withOpacity(0.5), //remove this when you add image.
+            ),
+            child: Center(
+                child: SvgPicture.asset(
+              'assets/svg/list.svg',
+              width: 16,
+              height: 16,
+              color: Colors.white,
+            )),
+          ),
+        ),
+      ),
     );
   }
 }
