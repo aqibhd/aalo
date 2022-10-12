@@ -42,10 +42,11 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final int splashSecond = int.parse(FlutterConfig.get('SPLASH_SECOND'));
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () => FlutterNativeSplash.remove());
+    Timer(Duration(seconds: splashSecond), () => FlutterNativeSplash.remove());
   }
 
   int currentPage = 0;
