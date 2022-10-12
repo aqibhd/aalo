@@ -62,29 +62,29 @@ class _DashboardState extends State<Dashboard> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        actions: currentPage == 0
-            ? [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: AdditionalResourceButton(),
-                )
-              ]
-            : null,
-        elevation: 0,
-        backgroundColor: Colors.black.withOpacity(0.1),
-        title: currentPage != 1
-            ? Text(pages[currentPage]['name'])
-            : Container(
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    color: Colors.white),
-              ),
-        centerTitle: true,
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.black.withOpacity(0.05)),
-      ),
+      // appBar: AppBar(
+      //   actions: currentPage == 0
+      //       ? [
+      //           const Padding(
+      //             padding: EdgeInsets.all(8.0),
+      //             child: AdditionalResourceButton(),
+      //           )
+      //         ]
+      //       : null,
+      //   elevation: 0,
+      //   backgroundColor: Colors.black.withOpacity(0.1),
+      //   title: currentPage != 1
+      //       ? Text(pages[currentPage]['name'])
+      //       : Container(
+      //           height: 50,
+      //           decoration: BoxDecoration(
+      //               borderRadius: BorderRadius.all(Radius.circular(50)),
+      //               color: Colors.white),
+      //         ),
+      //   centerTitle: true,
+      //   systemOverlayStyle: SystemUiOverlayStyle(
+      //       statusBarColor: Colors.black.withOpacity(0.05)),
+      // ),
       body: Stack(children: [
         pages[currentPage]['screen'],
         Positioned(

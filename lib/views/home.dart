@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:aalo/widgets/overlay_appbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -30,39 +31,50 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getPhotos(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: GridView.builder(
-                itemCount: snapshot.data!.length,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 130,
-                    childAspectRatio: 2 / 3,
-                    crossAxisSpacing: 2,
-                    mainAxisSpacing: 2),
-                itemBuilder: (BuildContext context, int index) => Container(
-                  color: Color(int.parse(
-                      '0xff${(snapshot.data![index].avgColor).substring(1)}')),
-                  child: CachedNetworkImage(
-                    imageUrl: (snapshot.data![index]).src.tiny,
-                    fit: BoxFit.cover,
+    return Stack(
+      children: [
+        FutureBuilder(
+            future: getPhotos(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: double.infinity,
+                  child: GridView.builder(
+                    padding: EdgeInsets.only(
+                        top: 56.0 + (MediaQuery.of(context).padding.top)),
+                    itemCount: snapshot.data!.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 130,
+                            childAspectRatio: 2 / 3,
+                            crossAxisSpacing: 2,
+                            mainAxisSpacing: 2),
+                    itemBuilder: (BuildContext context, int index) => Container(
+                      color: Color(int.parse(
+                          '0xff${(snapshot.data![index].avgColor).substring(1)}')),
+                      child: CachedNetworkImage(
+                        imageUrl: (snapshot.data![index]).src.tiny,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            );
-          } else {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: Center(
-                  child: Text('Loading...',
-                      style: TextStyle(color: Colors.white))),
-            );
-          }
-        });
+                );
+              } else {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: double.infinity,
+                  child: Center(
+                      child: Text('Loading...',
+                          style: TextStyle(color: Colors.white))),
+                );
+              }
+            }),
+        OverlayAppBar(
+            child: Row(
+          children: [Text("Heello")],
+        ))
+      ],
+    );
   }
 }
