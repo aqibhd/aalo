@@ -9,7 +9,11 @@ class OverlayAppBar extends StatelessWidget {
     return SizedBox(
       height: 56.0 + (MediaQuery.of(context).padding.top),
       width: double.infinity,
-      child: child,
+      child: Padding(
+          padding: EdgeInsets.only(
+            top: (MediaQuery.of(context).padding.top),
+          ),
+          child: child),
     );
   }
 }
